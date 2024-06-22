@@ -67,7 +67,6 @@ app.get("/start-record", async (request, response) => {
         return;
       }
       const filename = path.join(folderPath, `${folderName}a.m3u8`);
-      //ffmpeg -i rtsp://admin:password123@192.168.0.64:554/Streaming/Channels/101 -i watermark.png -filter_complex "[1:v]scale=iw/4:ih/4[watermark];[0:v][watermark]overlay=W-w-10:H-h-10" -r 25 -c:v libx264 -preset fast -crf 30 -an -force_key_frames expr:gte(t,n_forced*40) -f hls -hls_time 40 -hls_list_size 0 -y index.m3u8
       const ffmpeg = spawn(
         "ffmpeg",
         [
@@ -231,9 +230,7 @@ app.get("/get-thumbnail", (request, response) => {
   const { rtsp } = request.query;
 
   const ip = rtsp.match(/(\d{1,3}\.){3}\d{1,3}/)[0];
-  console.log(ip);
-  console.log(rtsp);
-  //const ip = rtsp.match(/rtsp:\/\/admin:password123@([\d.]+):/)[1];
+
   const folderPath = path.join(__dirname, ip);
 
   fs.mkdir(folderPath, (error) => {
